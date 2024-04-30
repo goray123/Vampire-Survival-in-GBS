@@ -74,6 +74,7 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.instance.isLive) return;
         switch (id) {
             case 0:
                 transform.Rotate(Vector3.forward * speed * Time.deltaTime);
@@ -96,7 +97,7 @@ public class Weapon : MonoBehaviour
         if (id == 0)
             Batch();
 
-        player.BroadcastMessage("ApplyGear");
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
 
     }
 
