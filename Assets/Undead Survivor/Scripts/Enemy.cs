@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate() 
     {
         if (!GameManager.instance.isLive) return;
-        if (!isLive || anime.GetCurrentAnimatorStateInfo(0).IsName("Hit")) 
+        if (!isLive || anime.GetCurrentAnimatorStateInfo(0).IsName("Hit")) //hit일 때 넉백을 주기 위함.
             return;
 
         Vector2 dirVec = target.position - rigid.position;
@@ -63,20 +63,21 @@ public class Enemy : MonoBehaviour
     private void LateUpdate() 
     {
         if (!GameManager.instance.isLive) return;
+
         if (isLive)
             sr.flipX = target.position.x < rigid.position.x;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Bullet") || !isLive)
-            return;
+        if (!collision.CompareTag("Bullet") || !isLive) return;
 
         health -= collision.GetComponent<Bullet>().damage;
         StartCoroutine(KnockBack());
 
         if (health > 0) {
             anime.SetTrigger("Hit");
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
         }
         else {
             isLive = false;
@@ -86,6 +87,9 @@ public class Enemy : MonoBehaviour
             anime.SetBool("Dead", true);
             GameManager.instance.kill++;
             GameManager.instance.GetExp();
+
+            if (GameManager.instance.isLive) //Enemy Cleaner가 죽일 때는 소리가 나지 않도록
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
         }
     }
 
@@ -97,7 +101,7 @@ public class Enemy : MonoBehaviour
         rigid.AddForce(dirVec.normalized * 3f, ForceMode2D.Impulse); //넉백 크기 : 3
     }
 
-    public void Dead()
+    public void Dead() //Animation Event로 사용됨.
     {
         gameObject.SetActive(false);
     }

@@ -18,7 +18,7 @@ public class Scanner : MonoBehaviour
     private Transform GetNearest()
     {
         Transform result = null;
-        float diff = 100;
+        float diff = 10000000;
 
         foreach (RaycastHit2D target in  targets) {
             Vector3 myPos = transform.position;

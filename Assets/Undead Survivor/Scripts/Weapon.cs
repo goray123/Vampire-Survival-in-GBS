@@ -20,7 +20,6 @@ public class Weapon : MonoBehaviour
 
     public void Init(ItemData data)
     {   
-        //basic
         name = "Weapon " + data.itemId;
         transform.parent = player.transform;
         transform.localPosition = Vector3.zero;
@@ -34,7 +33,7 @@ public class Weapon : MonoBehaviour
                 prefabId = index;
                 break;
             }
-        }
+        } //editor 의존도를 낮추기 위해서
 
         switch (id) {
             case 0: //근접회전무기
@@ -42,7 +41,7 @@ public class Weapon : MonoBehaviour
                 Batch();
                 break;
             default:
-                speed = 0.3f;
+                speed = 0.66f; //기본 연사속도
                 break;
         }
 
@@ -55,10 +54,10 @@ public class Weapon : MonoBehaviour
             Transform bullet;
             
             if (index < transform.childCount) {
-                bullet = transform.GetChild(index);
+                bullet = transform.GetChild(index); //있는 무기는 재활용
             }
             else {
-                bullet = GameManager.instance.pool.Get(prefabId).transform;
+                bullet = GameManager.instance.pool.Get(prefabId).transform; //없는 무기는 재생성
                 bullet.parent = transform;
             }
             
@@ -75,6 +74,7 @@ public class Weapon : MonoBehaviour
     private void Update()
     {
         if (!GameManager.instance.isLive) return;
+
         switch (id) {
             case 0:
                 transform.Rotate(Vector3.forward * speed * Time.deltaTime);
@@ -114,5 +114,7 @@ public class Weapon : MonoBehaviour
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         bullet.GetComponent<Bullet>().Init(damage, count, dir);
+
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);
     }
 }

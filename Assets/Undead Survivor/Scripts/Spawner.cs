@@ -8,16 +8,20 @@ public class Spawner : MonoBehaviour
     public SpawnData[] spawnData;
     private float timer;
     private int spawnLevel;
+    public float levelTime;
 
-    private void Awake()
+    private void Start()
     {
         spawnPoint = GetComponentsInChildren<Transform>(); //나를 포함하는 아이들
+        levelTime = GameManager.instance.maxGameTime / spawnData.Length;
     }
 
     private void Update()
     {
+        if (!GameManager.instance.isLive) return;
+
         timer += Time.deltaTime;
-        spawnLevel = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 10), spawnData.Length-1); //버림
+        spawnLevel = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / levelTime), spawnData.Length-1); //버림
         
         if (timer > spawnData[spawnLevel].spawnTime) {
             Spawn();
@@ -28,7 +32,7 @@ public class Spawner : MonoBehaviour
     private void Spawn()
     {
         GameObject enemy = GameManager.instance.pool.Get(0);
-        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
+        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position; //0은 Player이므로 제외
         enemy.GetComponent<Enemy>().Init(spawnData[spawnLevel]);
     }
 }
