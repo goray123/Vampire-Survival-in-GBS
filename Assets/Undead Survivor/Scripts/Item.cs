@@ -38,7 +38,7 @@ public class Item : MonoBehaviour
                 break;
             case ItemData.ItemType.Glove:
             case ItemData.ItemType.Shoe:
-                descText.text = string.Format(data.itemDesc, data.damages[level]* 100);
+                descText.text = string.Format(data.itemDesc, data.damages[level] * 100);
                 break;
             default:
                 descText.text = string.Format(data.itemDesc);

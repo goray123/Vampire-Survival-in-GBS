@@ -41,7 +41,7 @@ public class Weapon : MonoBehaviour
                 Batch();
                 break;
             default:
-                speed = 0.66f; //기본 연사속도
+                speed = 1.25f; //기본 연사속도
                 break;
         }
 
