@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     public float maxHealth;
     public RuntimeAnimatorController[] animeCon;
     private bool isLive;
+    private bool isHitting = false;
+    private float hittingTime = 0.25f;
 
     public Rigidbody2D target;
 
@@ -72,6 +74,8 @@ public class Enemy : MonoBehaviour
     {
         if (!collision.CompareTag("Bullet") || !isLive) return;
 
+        Debug.Log(collision.name);
+
         health -= collision.GetComponent<Bullet>().damage;
         StartCoroutine(KnockBack());
 
@@ -91,6 +95,41 @@ public class Enemy : MonoBehaviour
             if (GameManager.instance.isLive) //Enemy Cleaner가 죽일 때는 소리가 나지 않도록
                 AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Bullet") || !isLive) return;
+        if (isHitting) return;
+
+        Debug.Log(collision.name);
+
+        health -= collision.GetComponent<Bullet>().damage;
+        StartCoroutine(KnockBack());
+
+        if (health > 0) {
+            anime.SetTrigger("Hit");
+            isHitting = true;
+            Invoke("ChangeHit", hittingTime);
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+        }
+        else {
+            isLive = false;
+            cl.enabled = false;
+            rigid.simulated = false;
+            sr.sortingOrder = 0;
+            anime.SetBool("Dead", true);
+            GameManager.instance.kill++;
+            GameManager.instance.GetExp();
+
+            if (GameManager.instance.isLive) //Enemy Cleaner가 죽일 때는 소리가 나지 않도록
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+        }
+    }
+
+    private void ChangeHit()
+    {
+        isHitting = false;
     }
 
     private IEnumerator KnockBack()

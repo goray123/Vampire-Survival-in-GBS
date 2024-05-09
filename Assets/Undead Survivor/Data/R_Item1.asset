@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac747c55d47884f4ba56c62f0758f169, type: 3}
-  m_Name: Item 5
+  m_Name: R_Item1
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 1
   itemId: 1
-  itemName: "\uC790\uAE30\uC7A5"
-  itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uBC94\uC704 {1}\uBC30 \uC99D\uAC00"
-  itemIcon: {fileID: 154122315, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
-  baseDamage: 10
+  itemName: "\uC548\uBB3D\uC740\uC5FC\uC0B0"
+  itemDesc: "\uB2FF\uC73C\uBA74 \uC544\uD504\uB2E4.\n\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uAC1C\uC218
+    {1}\uAC1C \uCD94\uAC00"
+  itemIcon: {fileID: 1749867152, guid: 9cd8f63b0b81b8e43801f8633f9e8ee6, type: 3}
+  baseDamage: 7.5
   baseCount: 1
   damages:
   - 0.2
-  - 0.3
   - 0.2
-  - 0.3
+  - 0.2
+  - 0.2
   - 0.5
   counts: 0100000001000000010000000100000002000000
-  projectile: {fileID: 0}
+  projectile: {fileID: 2961766921181694285, guid: 76efc9c3cac884f46a9659887cc91cc6, type: 3}

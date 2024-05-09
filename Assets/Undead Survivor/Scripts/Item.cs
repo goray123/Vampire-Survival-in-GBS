@@ -55,7 +55,7 @@ public class Item : MonoBehaviour
                 if (level == 0) {
                     GameObject newWeapon = new GameObject();
                     weapon = newWeapon.AddComponent<Weapon>();
-                    weapon.Init(data);
+                    weapon.Init(data, level);
                 }
                 else {
                     float nextDamage = data.baseDamage;

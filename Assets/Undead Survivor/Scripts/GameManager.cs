@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = 120;
         health = maxHealth;
-        uiLevelUp.Select(1); //원거리 무기 제공
+        uiLevelUp.Select(6); //원거리 무기 제공
         Resume(); //TimeScale을 다시 설정하기 위해서
 
         AudioManager.instance.PlayBgm(true);
