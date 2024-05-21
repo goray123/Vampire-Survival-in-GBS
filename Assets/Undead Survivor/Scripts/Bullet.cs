@@ -44,13 +44,13 @@ public class Bullet : MonoBehaviour
 
     private void HCl_Animation()
     {
-        rigid.simulated = false;
+        rigid.gravityScale = 0;
+        rigid.velocity = Vector3.zero;
         sr.sprite = sprites[1];
         sr.color = new Color(0.5564f, 0.8066f, 0.3728f, 0.7176f);
         transform.localScale = Vector3.one * 5;
         cl.enabled = true;
         Instantiate(effect, transform);
-        Debug.Log(cl.enabled);
         //Invoke("HCl_isGone", 3f);
     }
 
